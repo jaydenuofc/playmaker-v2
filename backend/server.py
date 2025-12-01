@@ -11,7 +11,7 @@ SLEEPER_PLAYERS_URL = "https://api.sleeper.app/v1/players/nfl"
 def map_injury_to_color(status: str | None) -> str:
     """
     Convert Sleeper injury_status to traffic-light colors.
-    Examples from Sleeper: 'Out', 'Questionable', 'Doubtful', 'IR', 'Healthy', etc.
+    Examples: 'Out', 'Questionable', 'Doubtful', 'IR', 'Healthy', etc.
     """
     if not status or status.lower() in ["healthy", ""]:
         return "green"
@@ -35,18 +35,6 @@ def player_status():
     """
     Example:
     GET /api/player-status?names=Jalen%20Hurts,Puka%20Nacua
-
-    Returns JSON like:
-    [
-      {
-        "name": "Jalen Hurts",
-        "team": "PHI",
-        "position": "QB",
-        "injury_status": "Questionable",
-        "color": "yellow"
-      },
-      ...
-    ]
     """
     names_param = request.args.get("names")
     if not names_param:
@@ -87,3 +75,5 @@ def player_status():
 if __name__ == "__main__":
     # Local dev
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+
