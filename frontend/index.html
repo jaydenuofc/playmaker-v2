@@ -179,6 +179,12 @@
       font-size: 0.85rem;
     }
 
+    /* Highlight invalid starters */
+    .player-card.invalid-starter {
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
     .player-main {
       display: flex;
       align-items: center;
@@ -364,6 +370,23 @@
     .risk-dot.yellow { background: #facc15; }
     .risk-dot.red { background: #ef4444; }
 
+    .lineup-error {
+      margin: 4px auto 4px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      font-size: 0.78rem;
+      color: #b91c1c;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lineup-error.hidden {
+      display: none;
+    }
+
     .edit-roster {
       margin-top: 16px;
       padding: 10px 12px;
@@ -433,7 +456,7 @@
         <ul>
           <li>Move players between <em>Starters</em> and <em>Bench</em> with the “Move” button.</li>
           <li>Click <em>Update injury status from backend</em> to pull live injury data.</li>
-          <li>Use the color dots and risk summary to decide who to start or sit.</li>
+          <li>Use the color dots, risk summary, and lineup format check to decide who to start or sit.</li>
         </ul>
       </div>
     </header>
@@ -447,13 +470,14 @@
       <div id="riskSummary" class="risk-summary">
         Loading risk summary…
       </div>
+      <div id="lineupError" class="lineup-error hidden"></div>
     </section>
 
     <section class="layout">
       <div class="panel">
         <div class="panel-title">
           Starters
-          <span>Click “Move” to send to bench</span>
+          <span>Must match: 1 DST, 1 QB, 2 WR, 2 RB, 1 TE, 2 FLEX, 1 K</span>
         </div>
         <div id="startersList" class="player-list"></div>
       </div>
@@ -507,6 +531,17 @@
     const API_BASE = "https://playmaker-v2-backend.onrender.com";
     const STORAGE_KEY = "playmaker_v2_players";
 
+    // Starter position limits
+    const STARTER_LIMITS = {
+      DST: 1,
+      QB: 1,
+      WR: 2,
+      RB: 2,
+      TE: 1,
+      FLEX: 2,
+      K: 1
+    };
+
     /********************
      * Default roster   *
      ********************/
@@ -549,6 +584,7 @@
     const benchList = document.getElementById("benchList");
     const recommendationsContainer = document.getElementById("recommendations");
     const riskSummaryEl = document.getElementById("riskSummary");
+    const lineupErrorEl = document.getElementById("lineupError");
 
     function cloneDefaultPlayers() {
       return JSON.parse(JSON.stringify(defaultPlayers));
@@ -587,13 +623,43 @@
         .join("");
     }
 
+    // Calculate starter position counts and which positions are over the limit
+    function getLineupValidation() {
+      const starters = players.filter(p => p.isStarter);
+      const counts = {};
+
+      starters.forEach(p => {
+        counts[p.position] = (counts[p.position] || 0) + 1;
+      });
+
+      const invalidPositions = new Set();
+      const problems = [];
+
+      Object.keys(STARTER_LIMITS).forEach(pos => {
+        const limit = STARTER_LIMITS[pos];
+        const count = counts[pos] || 0;
+        if (count > limit) {
+          invalidPositions.add(pos);
+          problems.push(`${pos} (${count}/${limit})`);
+        }
+      });
+
+      return { counts, invalidPositions, problems };
+    }
+
     function renderPlayers() {
       startersList.innerHTML = "";
       benchList.innerHTML = "";
 
+      const { invalidPositions, problems } = getLineupValidation();
+
       players.forEach(player => {
         const card = document.createElement("div");
         card.className = "player-card";
+
+        if (player.isStarter && invalidPositions.has(player.position)) {
+          card.classList.add("invalid-starter");
+        }
 
         const main = document.createElement("div");
         main.className = "player-main";
@@ -650,6 +716,17 @@
           benchList.appendChild(card);
         }
       });
+
+      // Update lineup error message
+      if (problems.length === 0) {
+        lineupErrorEl.textContent = "";
+        lineupErrorEl.classList.add("hidden");
+      } else {
+        lineupErrorEl.textContent =
+          "Lineup error: too many starters at " + problems.join(", ") +
+          ". Allowed format is 1 DST, 1 QB, 2 WR, 2 RB, 1 TE, 2 FLEX, 1 K.";
+        lineupErrorEl.classList.remove("hidden");
+      }
 
       renderRecommendations();
       renderRiskSummary();
