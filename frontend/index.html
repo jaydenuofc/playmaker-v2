@@ -503,7 +503,7 @@
   </div>
 
   <script>
-    // 🔥 Using YOUR backend URL
+    // Backend for V2
     const API_BASE = "https://playmaker-v2-backend.onrender.com";
     const STORAGE_KEY = "playmaker_v2_players";
 
@@ -528,7 +528,7 @@
       { id: 14, name: "J.K. Dobbins",         position: "RB",   team: "LAC", status: "healthy", isStarter: false },
       { id: 15, name: "Jared Goff",           position: "QB",   team: "DET", status: "healthy", isStarter: false },
       { id: 16, name: "J.J. McCarthy",        position: "QB",   team: "MIN", status: "healthy", isStarter: false },
-      { id: 17, name: "Travis Hunter",            position: "WR",   team: "JAX",  status: "healthy", isStarter: false }
+      { id: 17, name: "T. Hunter",            position: "WR",   team: "FA",  status: "healthy", isStarter: false }
     ];
 
     let players = [];
@@ -655,12 +655,6 @@
       renderRiskSummary();
     }
 
-    function statusScore(status) {
-      if (status === "healthy") return 2;
-      if (status === "questionable") return 1;
-      return 0;
-    }
-
     function renderRecommendations() {
       recommendationsContainer.innerHTML = "";
 
@@ -670,23 +664,26 @@
       const lines = [];
 
       starters.forEach(starter => {
-        const samePosBench = bench.filter(
-          b => b.position === starter.position ||
-          (starter.position === "FLEX" && ["RB", "WR", "TE"].includes(b.position))
+        // Only consider injured starters (yellow or red)
+        if (starter.status === "healthy") return;
+
+        // Bench players must be healthy and same position (or valid FLEX)
+        const healthyBench = bench.filter(b =>
+          b.status === "healthy" &&
+          (
+            b.position === starter.position ||
+            (starter.position === "FLEX" && ["RB", "WR", "TE"].includes(b.position))
+          )
         );
 
-        if (!samePosBench.length) return;
+        if (!healthyBench.length) return;
 
-        samePosBench.forEach(benchPlayer => {
-          const score = statusScore(starter.status) - statusScore(benchPlayer.status);
-          if (score > 0) {
-            lines.push({
-              starter,
-              benchPlayer,
-              severity: benchPlayer.status === "healthy" && starter.status === "out" ? "HIGH" : "MEDIUM"
-            });
-          }
-        });
+        // For simplicity, take the first healthy bench option
+        const benchPlayer = healthyBench[0];
+
+        const severity = starter.status === "out" ? "HIGH" : "MEDIUM";
+
+        lines.push({ starter, benchPlayer, severity });
       });
 
       if (!lines.length) {
@@ -697,7 +694,11 @@
         return;
       }
 
-      lines.sort((a, b) => statusScore(a.starter.status) - statusScore(b.starter.status));
+      // Injured starters who are OUT first
+      lines.sort((a, b) => {
+        const sevScore = s => (s.severity === "HIGH" ? 0 : 1);
+        return sevScore(a) - sevScore(b);
+      });
 
       lines.forEach(line => {
         const row = document.createElement("div");
@@ -712,7 +713,7 @@
           <span class="recommend-tag">${statusLabel[line.starter.status]}</span>.
           <br />
           You could start <strong>${line.benchPlayer.name}</strong> (${line.benchPlayer.position}, ${line.benchPlayer.team}) instead
-          — they are <span class="recommend-tag">${statusLabel[line.benchPlayer.status]}</span>.
+          — they are <span class="recommend-tag">${statusLabel["healthy"]}</span>.
           <br />
           <span style="font-size:0.72rem; color:#9ca3af;">${severityTag}</span>
         `;
@@ -858,4 +859,3 @@
   </script>
 </body>
 </html>
-
