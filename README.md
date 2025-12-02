@@ -80,4 +80,21 @@ Hosted on Render:
 **Data Source:** Sleeper injury data  
 **Storage:** Browser localStorage  
 
+---
+
+## 🧑‍💻 Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/jaydenuofc/playmaker-v2.git
+cd playmaker-v2
+
+playmaker-v2/
+│
+├── index.html       # Full app: HTML + CSS + JS
+├── logo.png         # UI logo
+├── screenshot.png   # App screenshot for README
+└── README.md
+
 
