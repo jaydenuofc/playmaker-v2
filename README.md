@@ -105,13 +105,13 @@ playmaker-v2/
 ### 3. Running Locally
 You have two options:
 
-Option A — Open Directly (Fastest)
+**Option A — Open Directly (Fastest)**
 
 Just open `index.html` in your browser.
 
 <br>
 
-Option B — Run a Local Server (Recommended)
+**Option B — Run a Local Server (Recommended)**
 
 Prevents CORS/API issues.
 ```bash
