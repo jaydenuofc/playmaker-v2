@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <title>Fantasy Start/Sit Helper – V2</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
@@ -25,34 +22,31 @@
       color: #1c2430;
       max-width: 1000px;
       width: 95%;
-      padding: 24px 24px 24px;
+      padding: 24px;
       border-radius: 12px;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
     }
 
-    .app-header {
-      text-align: center;
-      margin-bottom: 18px;
-      position: relative; /* needed so logo can sit in top-left */
-    }
+    /* HEADER + LOGO */
+    .app-header { text-align: center; margin-bottom: 18px; position: relative; }
 
-    /* Logo container in top-left of header */
     .app-logo {
       position: absolute;
       left: 0;
-      top: 0;
+      top: 10px;
     }
 
     .app-logo img {
-      height: 40px;   /* adjust if you want bigger/smaller */
+      height: 200px; /* 500% size */
       width: auto;
-      border-radius: 8px; /* optional rounded corners */
+      border-radius: 8px;
     }
 
     .app-title {
       font-size: 1.6rem;
       font-weight: 700;
       margin-bottom: 6px;
+      margin-top: 160px; /* push down below large logo */
     }
 
     .app-subtitle {
@@ -61,6 +55,15 @@
       margin-bottom: 6px;
     }
 
+    /* LEGEND */
+    .legend { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+    .legend-item { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color:#6b7280; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 999px; }
+    .legend-green { background:#00D97E; }
+    .legend-amber { background:#FFC145; }
+    .legend-red { background:#FF4D4D; }
+
+    /* HOW-TO BOX */
     .howto-box {
       margin-top: 10px;
       display: inline-block;
@@ -74,851 +77,437 @@
       max-width: 460px;
     }
 
-    .howto-box strong {
-      display: block;
-      font-size: 0.8rem;
-      margin-bottom: 4px;
-      color: #1d4ed8;
-    }
-
-    .howto-box ul {
-      padding-left: 16px;
-      list-style: disc;
-    }
-
-    .howto-box li + li {
-      margin-top: 2px;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin: 16px 0 10px;
-    }
-
+    /* BUTTONS */
+    .controls { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:16px 0 10px; }
     button {
-      border: none;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      background: #0A1A2F;
-      color: #ffffff;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+      border:none; padding:8px 14px; border-radius:999px;
+      font-size:0.85rem; cursor:pointer; background:#0A1A2F; color:#fff;
     }
+    button.secondary { background:#e5e7eb; color:#111827; }
+    button.danger { background:#fee2e2; color:#b91c1c; padding:4px 8px; font-size:0.7rem; }
 
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-      background: #122946;
-    }
-
-    button.secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    button.secondary:hover {
-      background: #d1d5db;
-    }
-
-    button.danger {
-      background: #fee2e2;
-      color: #b91c1c;
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-    }
-
-    button.danger:hover {
-      background: #fecaca;
-    }
-
+    /* LAYOUT */
     .layout {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
       gap: 16px;
       margin-top: 10px;
     }
+    @media(max-width:768px){ .layout { grid-template-columns:1fr; } }
 
-    @media (max-width: 768px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    /* PANELS */
     .panel {
-      background: #f9fafb;
-      border-radius: 10px;
-      padding: 12px 12px 8px;
-      border: 1px solid #e5e7eb;
+      background:#f9fafb; border-radius:10px; padding:12px; border:1px solid #e5e7eb;
     }
-
     .panel-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #374151;
+      font-size:0.9rem; font-weight:600; margin-bottom:8px;
+      display:flex; justify-content:space-between; color:#374151;
     }
 
-    .panel-title span {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #6b7280;
-    }
-
-    .player-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      max-height: 260px;
-      overflow-y: auto;
-      padding-right: 2px;
-    }
-
+    /* PLAYER CARD */
+    .player-list { display:flex; flex-direction:column; gap:6px; max-height:260px; overflow-y:auto; }
     .player-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 10px;
-      border-radius: 8px;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      font-size: 0.85rem;
+      display:flex; justify-content:space-between; padding:8px 10px;
+      border-radius:8px; background:#fff; border:1px solid #e5e7eb;
     }
+    .player-card.invalid-starter { border-color:#fca5a5; background:#fef2f2; }
 
-    /* Highlight invalid starters (too many at a position) */
-    .player-card.invalid-starter {
-      border-color: #fca5a5;
-      background: #fef2f2;
-    }
-
-    .player-main {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .player-main { display:flex; align-items:center; gap:8px; }
     .player-initial {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: #0A1A2F;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 600;
+      width:26px; height:26px; border-radius:999px;
+      background:#0A1A2F; color:#fff; display:flex; align-items:center; justify-content:center;
+      font-size:0.75rem; font-weight:600;
     }
+    .player-text { display:flex; flex-direction:column; }
+    .player-name { font-weight:600; }
+    .player-meta { font-size:0.7rem; color:#6b7280; }
 
-    .player-text {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
+    .player-right { display:flex; align-items:center; gap:6px; }
 
-    .player-name {
-      font-weight: 600;
-    }
+    /* STATUS PILL */
+    .status-pill { padding:3px 10px; border-radius:999px; font-size:0.7rem; font-weight:600; }
+    .status-green { background:#ecfdf5; color:#047857; }
+    .status-amber { background:#fffbeb; color:#b45309; }
+    .status-red { background:#fef2f2; color:#b91c1c; }
 
-    .player-meta {
-      font-size: 0.7rem;
-      color: #6b7280;
-    }
+    /* RECOMMENDATIONS */
+    .panel.recommend { background:#0f172a; color:#e5e7eb; border-color:#1e293b; grid-column:span 2; }
+    .recommend-line { padding:6px 8px; border:1px solid #1e293b; border-radius:6px; background:rgba(15,23,42,0.8); }
+    .recommend-tag { font-size:0.7rem; color:#93c5fd; }
 
-    .player-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .status-pill {
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      border: 1px solid transparent;
-    }
-
-    .status-green { background: #ecfdf5; color:#047857; border-color:#bbf7d0; }
-    .status-amber { background: #fffbeb; color:#b45309; border-color:#fed7aa; }
-    .status-red   { background: #fef2f2; color:#b91c1c; border-color:#fecaca; }
-
-    .panel.recommend {
-      background: #0f172a;
-      color: #e5e7eb;
-      border-color: #1e293b;
-      grid-column: span 2;
-    }
-
-    @media (max-width: 768px) {
-      .panel.recommend {
-        grid-column: span 1;
-      }
-    }
-
-    .panel.recommend .panel-title {
-      color: #e5e7eb;
-    }
-
-    .panel.recommend .panel-title span {
-      color: #9ca3af;
-    }
-
-    .recommend-body {
-      font-size: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .recommend-note {
-      color: #9ca3af;
-      font-size: 0.7rem;
-      margin-top: 6px;
-    }
-
-    .recommend-line {
-      padding: 6px 8px;
-      border-radius: 6px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid #1e293b;
-    }
-
-    .recommend-line strong {
-      color: #e5e7eb;
-    }
-
-    .recommend-tag {
-      font-size: 0.7rem;
-      color: #93c5fd;
-      margin-left: 4px;
-    }
-
-    .legend {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 6px;
-    }
-
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.72rem;
-      color: #6b7280;
-    }
-
-    .legend-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-    }
-
-    .legend-green {
-      background: #00D97E;
-    }
-
-    .legend-amber {
-      background: #FFC145;
-    }
-
-    .legend-red {
-      background: #FF4D4D;
-    }
-
+    /* RISK SUMMARY */
     .risk-summary {
-      margin: 4px auto 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      border: 1px solid #e5e7eb;
-      font-size: 0.78rem;
-      color: #334155;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+      margin:6px auto; padding:6px 10px; border-radius:999px;
+      background:#f1f5f9; display:inline-flex; gap:10px;
+      font-size:0.78rem; color:#334155;
     }
+    .risk-dot { width:8px; height:8px; border-radius:999px; display:inline-block; }
+    .risk-dot.green { background:#22c55e; }
+    .risk-dot.yellow { background:#facc15;}
+    .risk-dot.red { background:#ef4444;}
 
-    .risk-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      display: inline-block;
+    /* LINEUP ERROR */
+    .lineup-error { margin:6px auto; padding:6px 12px; border-radius:999px;
+      background:#fef2f2; border:1px solid #fecaca; color:#b91c1c;
     }
-
-    .risk-dot.green { background: #22c55e; }
-    .risk-dot.yellow { background: #facc15; }
-    .risk-dot.red { background: #ef4444; }
-
-    .lineup-error {
-      margin: 4px auto 4px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      font-size: 0.78rem;
-      color: #b91c1c;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .lineup-error.hidden {
-      display: none;
-    }
-
-    .edit-roster {
-      margin-top: 16px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      font-size: 0.8rem;
-    }
-
-    .edit-roster-title {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #374151;
-    }
-
-    .edit-roster-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .edit-roster-form input,
-    .edit-roster-form select {
-      padding: 6px 8px;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      font-size: 0.78rem;
-      min-width: 120px;
-    }
-
-    .edit-roster small {
-      display: block;
-      margin-top: 4px;
-      color: #6b7280;
-      font-size: 0.7rem;
-    }
-
-    footer {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 0.7rem;
-      color: #9ca3af;
-    }
+    .lineup-error.hidden { display:none; }
   </style>
 </head>
+
 <body>
-  <div class="app">
-    <header class="app-header">
-      <div class="app-logo">
-        <img src="logo.png" alt="PlayMaker logo" />
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="app-logo"><img src="logo.png" alt="Logo" /></div>
+
+    <div class="app-title">Fantasy Start/Sit Helper – V2</div>
+
+    <div class="app-subtitle">
+      Green = start, amber = be careful, red = sit (injury-based).
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot legend-green"></span>Healthy</div>
+      <div class="legend-item"><span class="legend-dot legend-amber"></span>Questionable</div>
+      <div class="legend-item"><span class="legend-dot legend-red"></span>Out / IR</div>
+    </div>
+
+    <div class="howto-box">
+      <strong>How to use this app</strong>
+      • Move players between Starters and Bench<br>
+      • Pull live injuries from backend<br>
+      • App checks lineup rules + gives recommendations
+    </div>
+  </header>
+
+  <!-- BUTTONS -->
+  <section class="controls">
+    <button id="fetchFromEspn">Update injury status from backend</button>
+    <button class="secondary" id="resetData">Reset to default lineup</button>
+  </section>
+
+  <section style="text-align:center;">
+    <div id="riskSummary" class="risk-summary">Loading risk summary…</div>
+    <div id="lineupError" class="lineup-error hidden"></div>
+  </section>
+
+  <!-- MAIN LAYOUT -->
+  <section class="layout">
+
+    <!-- STARTERS -->
+    <div class="panel">
+      <div class="panel-title">
+        Starters
+        <span>1 DST, 1 QB, 2 WR, 2 RB, 1 TE, 2 FLEX, 1 K</span>
       </div>
+      <div id="startersList" class="player-list"></div>
+    </div>
 
-      <div class="app-title">Fantasy Start/Sit Helper – V2</div>
-      <div class="app-subtitle">
-        Green = start, amber = be careful, red = sit (injury-based).
-      </div>
-      <div class="legend">
-        <div class="legend-item">
-          <span class="legend-dot legend-green"></span><span>Healthy</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot legend-amber"></span><span>Questionable</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot legend-red"></span><span>Out / IR</span>
-        </div>
-      </div>
-      <div class="howto-box">
-        <strong>How to use this app</strong>
-        <ul>
-          <li>Move players between <em>Starters</em> and <em>Bench</em> with the “Move” button.</li>
-          <li>Click <em>Update injury status from backend</em> to pull live injury data.</li>
-          <li>Use the color dots, risk summary, and lineup format check to decide who to start or sit.</li>
-        </ul>
-      </div>
-    </header>
+    <!-- BENCH -->
+    <div class="panel">
+      <div class="panel-title">Bench <span>Move to starters</span></div>
+      <div id="benchList" class="player-list"></div>
+    </div>
 
-    <section class="controls">
-      <button id="fetchFromEspn">Update injury status from backend</button>
-      <button class="secondary" id="resetData">Reset to default lineup</button>
-    </section>
+    <!-- RECOMMENDATIONS -->
+    <div class="panel recommend">
+      <div class="panel-title">Start/Sit Recommendations</div>
+      <div id="recommendations"></div>
+    </div>
+  </section>
 
-    <section style="text-align:center;">
-      <div id="riskSummary" class="risk-summary">
-        Loading risk summary…
-      </div>
-      <div id="lineupError" class="lineup-error hidden"></div>
-    </section>
+  <!-- EDIT ROSTER -->
+  <section class="panel" style="margin-top:12px;">
+    <div style="font-weight:600; margin-bottom:6px;">Edit Roster</div>
+    <input id="newPlayerName" placeholder="Player name">
+    <input id="newPlayerTeam" placeholder="Team">
+    <select id="newPlayerPosition">
+      <option>WR</option><option>RB</option><option>QB</option>
+      <option>TE</option><option>FLEX</option><option>DST</option><option>K</option>
+    </select>
+    <button id="addPlayerBtn">Add to Bench</button>
+  </section>
 
-    <section class="layout">
-      <div class="panel">
-        <div class="panel-title">
-          Starters
-          <span>Must match: 1 DST, 1 QB, 2 WR, 2 RB, 1 TE, 2 FLEX, 1 K</span>
-        </div>
-        <div id="startersList" class="player-list"></div>
-      </div>
+</div>
 
-      <div class="panel">
-        <div class="panel-title">
-          Bench
-          <span>Click “Move” to send to starters</span>
-        </div>
-        <div id="benchList" class="player-list"></div>
-      </div>
+<!-- FULL JAVASCRIPT -->
+<script>
+const API_BASE = "https://playmaker-v2-backend.onrender.com";
+const STORAGE_KEY = "playmaker_v2_players";
 
-      <div class="panel recommend">
-        <div class="panel-title">
-          Start/Sit Recommendations
-          <span class="badge">Injury-based only</span>
-        </div>
-        <div id="recommendations" class="recommend-body"></div>
-        <div class="recommend-note">
-          This uses live injury data from your backend powered by the Sleeper API.
-        </div>
-      </div>
-    </section>
+const STARTER_LIMITS = {
+  DST:1, QB:1, WR:2, RB:2, TE:1, FLEX:2, K:1
+};
 
-    <section class="edit-roster">
-      <div class="edit-roster-title">Edit Roster (V2 feature)</div>
-      <div class="edit-roster-form">
-        <input id="newPlayerName" type="text" placeholder="Player name (e.g. Tank Dell)" />
-        <input id="newPlayerTeam" type="text" placeholder="Team (e.g. HOU)" />
-        <select id="newPlayerPosition">
-          <option value="WR">WR</option>
-          <option value="RB">RB</option>
-          <option value="QB">QB</option>
-          <option value="TE">TE</option>
-          <option value="FLEX">FLEX</option>
-          <option value="DST">DST</option>
-          <option value="K">K</option>
-        </select>
-        <button id="addPlayerBtn">Add to Bench</button>
-      </div>
-      <small>Added players start on the bench with a healthy status. You can move them to starters or delete them.</small>
-    </section>
+const defaultPlayers = [
+  { id:1, name:"Jacksonville Defense", position:"DST", team:"JAX", status:"healthy", isStarter:true },
+  { id:2, name:"Jalen Hurts", position:"QB", team:"PHI", status:"healthy", isStarter:true },
+  { id:3, name:"Puka Nacua", position:"WR", team:"LAR", status:"healthy", isStarter:true },
+  { id:4, name:"George Pickens", position:"WR", team:"PIT", status:"healthy", isStarter:true },
+  { id:5, name:"Bijan Robinson", position:"RB", team:"ATL", status:"healthy", isStarter:true },
+  { id:6, name:"Jaylen Warren", position:"RB", team:"PIT", status:"healthy", isStarter:true },
+  { id:7, name:"Jake Ferguson", position:"TE", team:"DAL", status:"healthy", isStarter:true },
+  { id:8, name:"Zach Charbonnet", position:"FLEX", team:"SEA", status:"healthy", isStarter:true },
+  { id:9, name:"Kenneth Gainwell", position:"FLEX", team:"PHI", status:"healthy", isStarter:true },
+  { id:10, name:"Chris Boswell", position:"K", team:"PIT", status:"healthy", isStarter:true },
+  { id:11, name:"Bucky Irving", position:"RB", team:"TB", status:"healthy", isStarter:false },
+  { id:12, name:"Mark Andrews", position:"TE", team:"BAL", status:"healthy", isStarter:false },
+  { id:13, name:"Michael Pittman Jr", position:"WR", team:"IND", status:"healthy", isStarter:false },
+  { id:14, name:"J.K. Dobbins", position:"RB", team:"LAC", status:"healthy", isStarter:false },
+  { id:15, name:"Jared Goff", position:"QB", team:"DET", status:"healthy", isStarter:false },
+  { id:16, name:"J.J. McCarthy", position:"QB", team:"MIN", status:"healthy", isStarter:false },
+  { id:17, name:"Travis Hunter", position:"WR", team:"JAX", status:"healthy", isStarter:false }
+];
 
-    <footer>
-      PlayMaker V2 · ENTI 633 · Lineup + injury helper
-    </footer>
-  </div>
+let players = [];
 
-  <script>
-    const API_BASE = "https://playmaker-v2-backend.onrender.com";
-    const STORAGE_KEY = "playmaker_v2_players";
+const statusLabel = {
+  healthy:"GREEN · GOOD TO PLAY",
+  questionable:"AMBER · QUESTIONABLE",
+  out:"RED · OUT / IR"
+};
 
-    // Starter position limits
-    const STARTER_LIMITS = {
-      DST: 1,
-      QB: 1,
-      WR: 2,
-      RB: 2,
-      TE: 1,
-      FLEX: 2,
-      K: 1
-    };
+function savePlayers(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(players)); }
+function loadPlayers(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); }
+  catch { return null; }
+}
 
-    /********************
-     * Default roster   *
-     ********************/
-    const defaultPlayers = [
-      { id: 1,  name: "Jacksonville Defense", position: "DST",  team: "JAX", status: "healthy", isStarter: true },
-      { id: 2,  name: "Jalen Hurts",          position: "QB",   team: "PHI", status: "healthy", isStarter: true },
-      { id: 3,  name: "Puka Nacua",           position: "WR",   team: "LAR", status: "healthy", isStarter: true },
-      { id: 4,  name: "George Pickens",       position: "WR",   team: "PIT", status: "healthy", isStarter: true },
-      { id: 5,  name: "Bijan Robinson",       position: "RB",   team: "ATL", status: "healthy", isStarter: true },
-      { id: 6,  name: "Jaylen Warren",        position: "RB",   team: "PIT", status: "healthy", isStarter: true },
-      { id: 7,  name: "Jake Ferguson",        position: "TE",   team: "DAL", status: "healthy", isStarter: true },
-      { id: 8,  name: "Zach Charbonnet",      position: "FLEX", team: "SEA", status: "healthy", isStarter: true },
-      { id: 9,  name: "Kenneth Gainwell",     position: "FLEX", team: "PHI", status: "healthy", isStarter: true },
-      { id: 10, name: "Chris Boswell",        position: "K",    team: "PIT", status: "healthy", isStarter: true },
+function getInitials(name){
+  return name.split(" ").filter(Boolean).map(x=>x[0]).join("").toUpperCase();
+}
 
-      { id: 11, name: "Bucky Irving",         position: "RB",   team: "TB",  status: "healthy", isStarter: false },
-      { id: 12, name: "Mark Andrews",         position: "TE",   team: "BAL", status: "healthy", isStarter: false },
-      { id: 13, name: "Michael Pittman Jr",   position: "WR",   team: "IND", status: "healthy", isStarter: false },
-      { id: 14, name: "J.K. Dobbins",         position: "RB",   team: "LAC", status: "healthy", isStarter: false },
-      { id: 15, name: "Jared Goff",           position: "QB",   team: "DET", status: "healthy", isStarter: false },
-      { id: 16, name: "J.J. McCarthy",        position: "QB",   team: "MIN", status: "healthy", isStarter: false },
-      { id: 17, name: "Travis Hunter",        position: "WR",   team: "JAX", status: "healthy", isStarter: false }
-    ];
+function validateLineup(){
+  const starters = players.filter(p=>p.isStarter);
+  const counts = {};
+  const invalid = new Set();
 
-    let players = [];
+  starters.forEach(p => counts[p.position] = (counts[p.position]||0)+1);
 
-    const statusToCss = {
-      healthy: "status-green",
-      questionable: "status-amber",
-      out: "status-red"
-    };
-
-    const statusLabel = {
-      healthy: "Green · Good to play",
-      questionable: "Amber · Questionable",
-      out: "Red · Out / IR"
-    };
-
-    const startersList = document.getElementById("startersList");
-    const benchList = document.getElementById("benchList");
-    const recommendationsContainer = document.getElementById("recommendations");
-    const riskSummaryEl = document.getElementById("riskSummary");
-    const lineupErrorEl = document.getElementById("lineupError");
-
-    function cloneDefaultPlayers() {
-      return JSON.parse(JSON.stringify(defaultPlayers));
+  let issues = [];
+  for(const pos of Object.keys(STARTER_LIMITS)){
+    if((counts[pos]||0) > STARTER_LIMITS[pos]){
+      invalid.add(pos);
+      issues.push(`${pos} (${counts[pos]}/${STARTER_LIMITS[pos]})`);
     }
+  }
+
+  return {invalid, issues};
+}
+
+function renderRiskSummary(){
+  const starters = players.filter(p=>p.isStarter);
+  let h=0,q=0,o=0;
+  starters.forEach(p=>{
+    if(p.status==="healthy") h++;
+    else if(p.status==="questionable") q++;
+    else o++;
+  });
+
+  document.getElementById("riskSummary").innerHTML = `
+    <span><strong>Starters risk summary:</strong></span>
+    <span><span class="risk-dot green"></span> ${h} healthy</span>
+    <span><span class="risk-dot yellow"></span> ${q} questionable</span>
+    <span><span class="risk-dot red"></span> ${o} out/IR</span>
+  `;
+}
+
+function renderPlayers(){
+  const startersList = document.getElementById("startersList");
+  const benchList = document.getElementById("benchList");
+  startersList.innerHTML = "";
+  benchList.innerHTML = "";
+
+  const {invalid, issues} = validateLineup();
+
+  const lineupError = document.getElementById("lineupError");
+  if(issues.length===0){
+    lineupError.classList.add("hidden");
+  } else {
+    lineupError.classList.remove("hidden");
+    lineupError.textContent =
+      "Lineup error: too many starters at " + issues.join(", ") +
+      ". Allowed: 1 DST, 1 QB, 2 WR, 2 RB, 1 TE, 2 FLEX, 1 K.";
+  }
+
+  players.forEach(player=>{
+    const card = document.createElement("div");
+    card.className = "player-card";
+    if(player.isStarter && invalid.has(player.position))
+      card.classList.add("invalid-starter");
+
+    const main = document.createElement("div");
+    main.className="player-main";
+
+    const initials = document.createElement("div");
+    initials.className="player-initial";
+    initials.textContent=getInitials(player.name);
+
+    const text = document.createElement("div");
+    text.className="player-text";
+    text.innerHTML = `<div class="player-name">${player.name}</div>
+                      <div class="player-meta">${player.position} · ${player.team}</div>`;
+
+    main.appendChild(initials);
+    main.appendChild(text);
+
+    const right = document.createElement("div");
+    right.className="player-right";
+
+    const status = document.createElement("div");
+    status.className=`status-pill status-${player.status}`;
+    status.textContent=statusLabel[player.status];
+
+    const moveBtn = document.createElement("button");
+    moveBtn.className="secondary";
+    moveBtn.style.fontSize="0.7rem";
+    moveBtn.textContent = player.isStarter ? "Move to Bench":"Move to Starters";
+    moveBtn.onclick=()=>toggleStarter(player.id);
+
+    const delBtn = document.createElement("button");
+    delBtn.className="danger";
+    delBtn.textContent="Delete";
+    delBtn.onclick=()=>deletePlayer(player.id);
+
+    right.appendChild(status);
+    right.appendChild(moveBtn);
+    right.appendChild(delBtn);
+
+    card.appendChild(main);
+    card.appendChild(right);
+
+    if(player.isStarter) startersList.appendChild(card);
+    else benchList.appendChild(card);
+  });
+
+  renderRecommendations();
+  renderRiskSummary();
+}
+
+function renderRecommendations(){
+  const container = document.getElementById("recommendations");
+  container.innerHTML="";
+
+  const starters = players.filter(p=>p.isStarter);
+  const bench = players.filter(p=>!p.isStarter);
+  const lines = [];
+
+  starters.forEach(st=>{
+    if(st.status==="healthy") return;
+
+    const validBench = bench.filter(b =>
+      b.status==="healthy" &&
+      (b.position===st.position ||
+       (st.position==="FLEX" && ["RB","WR","TE"].includes(b.position)))
+    );
+
+    if(!validBench.length) return;
+
+    const replacement = validBench[0];
+    const severity = st.status==="out" ? "HIGH" : "MEDIUM";
+
+    lines.push({starter:st, benchPlayer:replacement, severity});
+  });
+
+  if(!lines.length){
+    container.innerHTML = `<div class="recommend-line">
+      <strong>Your current lineup looks good based on injury status.</strong>
+    </div>`;
+    return;
+  }
+
+  lines.forEach(line=>{
+    const div=document.createElement("div");
+    div.className="recommend-line";
+    const sevText = line.severity==="HIGH"
+      ? "🚨 Strong injury risk"
+      : "⚠️ Consider swapping";
+
+    div.innerHTML = `
+      <strong>${line.starter.name}</strong> (${line.starter.position}) is
+      <span class="recommend-tag">${statusLabel[line.starter.status]}</span>.<br>
+      You could start <strong>${line.benchPlayer.name}</strong> (${line.benchPlayer.position}) instead —
+      they are <span class="recommend-tag">${statusLabel.healthy}</span>.<br>
+      <span style="font-size:0.72rem; color:#9ca3af;">${sevText}</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleStarter(id){
+  players = players.map(p=>p.id===id ? {...p, isStarter:!p.isStarter} : p);
+  savePlayers(); renderPlayers();
+}
+
+function deletePlayer(id){
+  if(!confirm("Remove this player?")) return;
+  players = players.filter(p=>p.id!==id);
+  savePlayers(); renderPlayers();
+}
+
+function addPlayer(){
+  const name = document.getElementById("newPlayerName").value.trim();
+  const team = document.getElementById("newPlayerTeam").value.trim().toUpperCase();
+  const pos = document.getElementById("newPlayerPosition").value;
+
+  if(!name){ alert("Enter name"); return; }
+
+  const newPlayer={
+    id: Math.max(0,...players.map(p=>p.id))+1,
+    name, team:team||"FA", position:pos, status:"healthy", isStarter:false
+  };
+
+  players.push(newPlayer);
+  savePlayers(); renderPlayers();
+}
+
+async function fetchFromEspnApi(){
+  try{
+    const names = players.map(p=>p.name).join(",");
+    const res = await fetch(`${API_BASE}/api/player-status?names=${encodeURIComponent(names)}`);
+
+    if(!res.ok) throw new Error("Backend error");
+    const data = await res.json();
+
+    players = players.map(p=>{
+      const match = data.find(d => d.name.toLowerCase().includes(p.name.toLowerCase()));
+      if(!match) return p;
+
+      let st = "healthy";
+      if(match.color==="yellow") st="questionable";
+      if(match.color==="red") st="out";
+
+      return {...p, status:st};
+    });
+
+    savePlayers(); renderPlayers();
+  }
+  catch(e){ alert("Could not load live injuries."); }
+}
+
+function resetLineup(){
+  if(!confirm("Reset to default?")) return;
+  players = JSON.parse(JSON.stringify(defaultPlayers));
+  savePlayers(); renderPlayers();
+}
+
+/* INIT */
+function init(){
+  const saved = loadPlayers();
+  players = (saved && Array.isArray(saved) && saved.length) ? saved : JSON.parse(JSON.stringify(defaultPlayers));
+
+  document.getElementById("fetchFromEspn").onclick=fetchFromEspnApi;
+  document.getElementById("resetData").onclick=resetLineup;
+  document.getElementById("addPlayerBtn").onclick=addPlayer;
+
+  renderPlayers();
+}
+init();
+</script>
 
-    /***************
-     * LocalStorage *
-     ***************/
-    function savePlayers() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(players));
-      } catch (e) {
-        console.warn("Could not save to localStorage", e);
-      }
-    }
-
-    function loadPlayers() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed)) return null;
-        return parsed;
-      } catch (e) {
-        console.warn("Could not read from localStorage", e);
-        return null;
-      }
-    }
-
-    function getInitials(name) {
-      return name
-        .split(" ")
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(part => part[0].toUpperCase())
-        .join("");
-    }
-
-    function getLineupValidation() {
-      const starters = players.filter(p => p.isStarter);
-      const counts = {};
-      starters.forEach(p => {
-        counts[p.position] = (counts[p.position] || 0) + 1;
-      });
-
-      const invalidPositions = new Set();
-      const problems = [];
-
-      Object.keys(STARTER_LIMITS).forEach(pos => {
-        const limit = STARTER_LIMITS[pos];
-        const count = counts[pos] || 0;
-        if (count > limit) {
-          invalidPositions.add(pos);
-          problems.push(`${pos} (${count}/${limit})`);
-        }
-      });
-
-      return { counts, invalidPositions, problems };
-    }
-
-    function renderPlayers() {
-      startersList.innerHTML = "";
-      benchList.innerHTML = "";
-
-      const { invalidPositions, problems } = getLineupValidation();
-
-      players.forEach(player => {
-        const card = document.createElement("div");
-        card.className = "player-card";
-
-        if (player.isStarter && invalidPositions.has(player.position)) {
-          card.classList.add("invalid-starter");
-        }
-
-        const main = document.createElement("div");
-        main.className = "player-main";
-
-        const initial = document.createElement("div");
-        initial.className = "player-initial";
-        initial.textContent = getInitials(player.name);
-
-        const textWrap = document.createElement("div");
-        textWrap.className = "player-text";
-
-        const nameEl = document.createElement("div");
-        nameEl.className = "player-name";
-        nameEl.textContent = player.name;
-
-        const metaEl = document.createElement("div");
-        metaEl.className = "player-meta";
-        metaEl.textContent = `${player.position} · ${player.team}`;
-
-        textWrap.appendChild(nameEl);
-        textWrap.appendChild(metaEl);
-
-        main.appendChild(initial);
-        main.appendChild(textWrap);
-
-        const right = document.createElement("div");
-        right.className = "player-right";
-
-        const status = document.createElement("div");
-        status.className = `status-pill ${statusToCss[player.status] || ""}`;
-        status.textContent = statusLabel[player.status] || "Status unknown";
-
-        const moveBtn = document.createElement("button");
-        moveBtn.textContent = player.isStarter ? "Move to Bench" : "Move to Starters";
-        moveBtn.classList.add("secondary");
-        moveBtn.style.fontSize = "0.7rem";
-        moveBtn.onclick = () => toggleStarter(player.id);
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
-        deleteBtn.classList.add("danger");
-        deleteBtn.onclick = () => deletePlayer(player.id);
-
-        right.appendChild(status);
-        right.appendChild(moveBtn);
-        right.appendChild(deleteBtn);
-
-        card.appendChild(main);
-        card.appendChild(right);
-
-        if (player.isStarter) {
-          startersList.appendChild(card);
-        } else {
-          benchList.appendChild(card);
-        }
-      });
-
-      if (problems.length === 0) {
-        lineupErrorEl.textContent = "";
-        lineupErrorEl.classList.add("hidden");
-      } else {
-        lineupErrorEl.textContent =
-          "Lineup error: too many starters at " + problems.join(", ") +
-          ". Allowed format is 1 DST, 1 QB, 2 WR, 2 RB, 1 TE, 2 FLEX, 1 K.";
-        lineupErrorEl.classList.remove("hidden");
-      }
-
-      renderRecommendations();
-      renderRiskSummary();
-    }
-
-    function renderRecommendations() {
-      recommendationsContainer.innerHTML = "";
-
-      const starters = players.filter(p => p.isStarter);
-      const bench = players.filter(p => !p.isStarter);
-
-      const lines = [];
-
-      starters.forEach(starter => {
-        // Only consider injured starters (yellow or red)
-        if (starter.status === "healthy") return;
-
-        // Bench players must be healthy and same position (or valid FLEX)
-        const healthyBench = bench.filter(b =>
-          b.status === "healthy" &&
-          (
-            b.position === starter.position ||
-            (starter.position === "FLEX" && ["RB", "WR", "TE"].includes(b.position))
-          )
-        );
-
-        if (!healthyBench.length) return;
-
-        const benchPlayer = healthyBench[0];
-        const severity = starter.status === "out" ? "HIGH" : "MEDIUM";
-
-        lines.push({ starter, benchPlayer, severity });
-      });
-
-      if (!lines.length) {
-        const ok = document.createElement("div");
-        ok.className = "recommend-line";
-        ok.innerHTML = "<strong>Your current lineup looks good based on injury status.</strong>";
-        recommendationsContainer.appendChild(ok);
-        return;
-      }
-
-      lines.sort((a, b) => {
-        const sevScore = s => (s.severity === "HIGH" ? 0 : 1);
-        return sevScore(a) - sevScore(b);
-      });
-
-      lines.forEach(line => {
-        const row = document.createElement("div");
-        row.className = "recommend-line";
-
-        const severityTag = line.severity === "HIGH"
-          ? "🚨 Strong injury risk"
-          : "⚠️ Consider swapping";
-
-        row.innerHTML = `
-          <strong>${line.starter.name}</strong> (${line.starter.position}, ${line.starter.team}) is 
-          <span class="recommend-tag">${statusLabel[line.starter.status]}</span>.
-          <br />
-          You could start <strong>${line.benchPlayer.name}</strong> (${line.benchPlayer.position}, ${line.benchPlayer.team}) instead
-          — they are <span class="recommend-tag">${statusLabel["healthy"]}</span>.
-          <br />
-          <span style="font-size:0.72rem; color:#9ca3af;">${severityTag}</span>
-        `;
-        recommendationsContainer.appendChild(row);
-      });
-    }
-
-    function renderRiskSummary() {
-      const starters = players.filter(p => p.isStarter);
-
-      let healthy = 0, questionable = 0, out = 0;
-      starters.forEach(p => {
-        if (p.status === "healthy") healthy++;
-        else if (p.status === "questionable") questionable++;
-        else if (p.status === "out") out++;
-      });
-
-      riskSummaryEl.innerHTML = `
-        <span><strong>Starters risk summary:</strong></span>
-        <span><span class="risk-dot green"></span> ${healthy} healthy</span>
-        <span><span class="risk-dot yellow"></span> ${questionable} questionable</span>
-        <span><span class="risk-dot red"></span> ${out} out / IR</span>
-      `;
-    }
-
-    function toggleStarter(id) {
-      players = players.map(p =>
-        p.id === id ? { ...p, isStarter: !p.isStarter } : p
-      );
-      savePlayers();
-      renderPlayers();
-    }
-
-    function deletePlayer(id) {
-      if (!confirm("Remove this player from your roster?")) return;
-      players = players.filter(p => p.id !== id);
-      savePlayers();
-      renderPlayers();
-    }
-
-    function getNextId() {
-      if (!players.length) return 1;
-      return Math.max(...players.map(p => p.id)) + 1;
-    }
-
-    function handleAddPlayer() {
-      const nameInput = document.getElementById("newPlayerName");
-      const teamInput = document.getElementById("newPlayerTeam");
-      const posSelect = document.getElementById("newPlayerPosition");
-
-      const name = nameInput.value.trim();
-      const team = teamInput.value.trim().toUpperCase();
-      const position = posSelect.value;
-
-      if (!name) {
-        alert("Please enter a player name.");
-        return;
-      }
-
-      const newPlayer = {
-        id: getNextId(),
-        name,
-        position,
-        team: team || "FA",
-        status: "healthy",
-        isStarter: false
-      };
-
-      players.push(newPlayer);
-      savePlayers();
-      renderPlayers();
-
-      nameInput.value = "";
-      teamInput.value = "";
-      posSelect.value = "WR";
-    }
-
-    async function fetchFromEspnApi() {
-      try {
-        const names = players.map(p => p.name);
-        const namesParam = encodeURIComponent(names.join(","));
-
-        const res = await fetch(`${API_BASE}/api/player-status?names=${namesParam}`);
-
-        if (!res.ok) {
-          throw new Error(`Backend error: ${res.status} ${res.statusText}`);
-        }
-
-        const apiData = await res.json();
-
-        players = players.map(p => {
-          const match = apiData.find(a =>
-            a.name.toLowerCase().includes(p.name.toLowerCase())
-          );
-
-          if (!match) return p;
-
-          let newStatus = "healthy";
-          if (match.color === "yellow") newStatus = "questionable";
-          if (match.color === "red") newStatus = "out";
-
-          return { ...p, status: newStatus };
-        });
-
-        savePlayers();
-        renderPlayers();
-      } catch (err) {
-        console.error(err);
-        alert("Could not load live injuries. Using local statuses only.");
-      }
-    }
-
-    function resetToDefault() {
-      if (!confirm("Reset lineup to default and clear saved changes?")) return;
-      players = cloneDefaultPlayers();
-      savePlayers();
-      renderPlayers();
-    }
-
-    function init() {
-      const loaded = loadPlayers();
-      if (loaded && Array.isArray(loaded) && loaded.length) {
-        players = loaded;
-      } else {
-        players = cloneDefaultPlayers();
-      }
-
-      renderPlayers();
-
-      document.getElementById("fetchFromEspn").addEventListener("click", fetchFromEspnApi);
-      document.getElementById("resetData").addEventListener("click", resetToDefault);
-      document.getElementById("addPlayerBtn").addEventListener("click", (e) => {
-        e.preventDefault();
-        handleAddPlayer();
-      });
-    }
-
-    init();
-  </script>
 </body>
 </html>
+
 
 
