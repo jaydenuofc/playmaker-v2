@@ -80,12 +80,4 @@ Hosted on Render:
 **Data Source:** Sleeper injury data  
 **Storage:** Browser localStorage  
 
----
 
-## 📥 Installation & Setup
-
-### 1. Clone the GitHub Repository
-
-```bash
-git clone https://github.com/<your-username>/playmaker-v2.git
-cd playmaker-v2
