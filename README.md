@@ -183,7 +183,7 @@ Open the app
 ---
 
 ### Credits
-Built by jaydenuofc for ENTI 633 using AI-assisted ideation, coding, iteration, and documentation.
+Built by Rae, Harvey, Abi, Jayden, Sara, and Kenneth for ENTI 633 using AI-assisted ideation, coding, iteration, and documentation.
 Injury data is sourced from Sleeper through a custom backend deployed on Render.
 
 
