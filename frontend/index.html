@@ -33,6 +33,20 @@
     .app-header {
       text-align: center;
       margin-bottom: 18px;
+      position: relative; /* needed so logo can sit in top-left */
+    }
+
+    /* Logo container in top-left of header */
+    .app-logo {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .app-logo img {
+      height: 40px;   /* adjust if you want bigger/smaller */
+      width: auto;
+      border-radius: 8px; /* optional rounded corners */
     }
 
     .app-title {
@@ -178,7 +192,7 @@
       font-size: 0.85rem;
     }
 
-    /* Highlight invalid starters */
+    /* Highlight invalid starters (too many at a position) */
     .player-card.invalid-starter {
       border-color: #fca5a5;
       background: #fef2f2;
@@ -413,6 +427,10 @@
 <body>
   <div class="app">
     <header class="app-header">
+      <div class="app-logo">
+        <img src="logo.png" alt="PlayMaker logo" />
+      </div>
+
       <div class="app-title">Fantasy Start/Sit Helper – V2</div>
       <div class="app-subtitle">
         Green = start, amber = be careful, red = sit (injury-based).
@@ -902,3 +920,5 @@
   </script>
 </body>
 </html>
+
+
