@@ -106,9 +106,13 @@ playmaker-v2/
 You have two options:
 
 Option A — Open Directly (Fastest)
+
 Just open `index.html` in your browser.
+
 <br>
+
 Option B — Run a Local Server (Recommended)
+
 Prevents CORS/API issues.
 ```bash
 python -m http.server 8000
