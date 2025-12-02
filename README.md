@@ -151,10 +151,10 @@ You can deploy this static site on:
 ---
 
 ### GitHub Pages Example:
-  Push code
-  Go to Settings → Pages
-  Choose “Deploy from Branch” → `main`
-  Your site goes live automatically
+  Push code:
+  - Go to Settings → Pages
+  - Choose “Deploy from Branch” → `main`
+  - Your site goes live automatically
 
 ---
 
