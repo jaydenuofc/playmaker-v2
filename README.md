@@ -89,8 +89,8 @@ Hosted on Render:
 ```bash
 git clone https://github.com/jaydenuofc/playmaker-v2.git
 cd playmaker-v2
-
 ```
+<br><br>
 
 ### 2. Project Structure
 ```bash
@@ -101,6 +101,7 @@ playmaker-v2/
 ├── screenshot.png   # App screenshot for README
 └── README.md
 ```
+<br><br>
 
 ### 3. Running Locally
 You have two options:
