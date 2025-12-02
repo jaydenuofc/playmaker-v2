@@ -104,6 +104,7 @@ playmaker-v2/
 
 ### 3. Running Locally
 You have two options:
+<br>
 
 **Option A — Open Directly (Fastest)**
 
