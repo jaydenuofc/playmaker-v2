@@ -107,9 +107,9 @@ You have two options:
 
 <br>
 
->>**Option A — Open Directly (Fastest)**
+    **Option A — Open Directly (Fastest)**
 
->>Just open `index.html` in your browser.
+    Just open `index.html` in your browser.
 
 <br>
 
