@@ -90,6 +90,8 @@ Hosted on Render:
 git clone https://github.com/jaydenuofc/playmaker-v2.git
 cd playmaker-v2
 
+```
+### 2. Project Structure
 playmaker-v2/
 │
 ├── index.html       # Full app: HTML + CSS + JS
@@ -97,7 +99,7 @@ playmaker-v2/
 ├── screenshot.png   # App screenshot for README
 └── README.md
 
-3. Running Locally
+### 3. Running Locally
 You have two options:
 
 Option A — Open Directly (Fastest)
@@ -110,13 +112,13 @@ python -m http.server 8000
 Then open:
 http://localhost:8000/index.html
 
-4. Backend Setup (Render)
+### 4. Backend Setup (Render)
 The app uses a Render-hosted API for injury data.
 Frontend references:
 const API_BASE = "https://playmaker-v2-backend.onrender.com";
 If your backend URL changes, update this constant inside index.html.
 
-5. Resetting / Updating Roster Data
+### 5. Resetting / Updating Roster Data
 Roster changes are saved using browser localStorage.
 
 To fully reset:
@@ -124,20 +126,20 @@ To fully reset:
   or
   Clear localStorage in DevTools → Application → Local Storage
 
-6. Deploying the App
+### 6. Deploying the App
 You can deploy this static site on:
   GitHub Pages
   Vercel
   Netlify
   Render
 
-GitHub Pages Example:
+### GitHub Pages Example:
   Push code
   Go to Settings → Pages
   Choose “Deploy from Branch” → main
   Your site goes live automatically
 
-Usage Guide
+### Usage Guide
 Open the app
 1. Click Update injury status from backend
 2. Review message colors (green/yellow/red)
@@ -146,14 +148,14 @@ Open the app
 5. Ensure lineup follows required league structure
 
 
-Future Enhancements
+### Future Enhancements
 - Projection and matchup-based recommendations
 - Multi-team or multi-league support
 - Mobile‑optimized layout
 - Export/share lineup features
 
 
-Credits
+### Credits
 Built by jaydenuofc for ENTI 633 using AI-assisted ideation, coding, iteration, and documentation.
 Injury data is sourced from Sleeper through a custom backend deployed on Render.
 
