@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Fantasy Start/Sit Helper – V2</title>
   <style>
-    /* Basic reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -235,23 +234,9 @@
       border: 1px solid transparent;
     }
 
-    .status-green {
-      background: #ecfdf5;
-      color: #047857;
-      border-color: #bbf7d0;
-    }
-
-    .status-amber {
-      background: #fffbeb;
-      color: #b45309;
-      border-color: #fed7aa;
-    }
-
-    .status-red {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-color: #fecaca;
-    }
+    .status-green { background: #ecfdf5; color:#047857; border-color:#bbf7d0; }
+    .status-amber { background: #fffbeb; color:#b45309; border-color:#fed7aa; }
+    .status-red   { background: #fef2f2; color:#b91c1c; border-color:#fecaca; }
 
     .panel.recommend {
       background: #0f172a;
@@ -285,14 +270,6 @@
       color: #9ca3af;
       font-size: 0.7rem;
       margin-top: 6px;
-    }
-
-    .badge {
-      font-size: 0.68rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #4b5563;
-      color: #9ca3af;
     }
 
     .recommend-line {
@@ -527,7 +504,6 @@
   </div>
 
   <script>
-    // Backend for V2
     const API_BASE = "https://playmaker-v2-backend.onrender.com";
     const STORAGE_KEY = "playmaker_v2_players";
 
@@ -563,7 +539,7 @@
       { id: 14, name: "J.K. Dobbins",         position: "RB",   team: "LAC", status: "healthy", isStarter: false },
       { id: 15, name: "Jared Goff",           position: "QB",   team: "DET", status: "healthy", isStarter: false },
       { id: 16, name: "J.J. McCarthy",        position: "QB",   team: "MIN", status: "healthy", isStarter: false },
-      { id: 17, name: "T. Hunter",            position: "WR",   team: "FA",  status: "healthy", isStarter: false }
+      { id: 17, name: "Travis Hunter",        position: "WR",   team: "JAX", status: "healthy", isStarter: false }
     ];
 
     let players = [];
@@ -623,11 +599,9 @@
         .join("");
     }
 
-    // Calculate starter position counts and which positions are over the limit
     function getLineupValidation() {
       const starters = players.filter(p => p.isStarter);
       const counts = {};
-
       starters.forEach(p => {
         counts[p.position] = (counts[p.position] || 0) + 1;
       });
@@ -717,7 +691,6 @@
         }
       });
 
-      // Update lineup error message
       if (problems.length === 0) {
         lineupErrorEl.textContent = "";
         lineupErrorEl.classList.add("hidden");
@@ -755,9 +728,7 @@
 
         if (!healthyBench.length) return;
 
-        // For simplicity, take the first healthy bench option
         const benchPlayer = healthyBench[0];
-
         const severity = starter.status === "out" ? "HIGH" : "MEDIUM";
 
         lines.push({ starter, benchPlayer, severity });
@@ -771,7 +742,6 @@
         return;
       }
 
-      // Injured starters who are OUT first
       lines.sort((a, b) => {
         const sevScore = s => (s.severity === "HIGH" ? 0 : 1);
         return sevScore(a) - sevScore(b);
@@ -868,9 +838,6 @@
       posSelect.value = "WR";
     }
 
-    /***************************************
-     * Live injury backend hook (Sleeper) *
-     ***************************************/
     async function fetchFromEspnApi() {
       try {
         const names = players.map(p => p.name);
@@ -931,7 +898,6 @@
       });
     }
 
-    // Initial boot
     init();
   </script>
 </body>
