@@ -119,7 +119,7 @@ Then open:
 ```bash
 http://localhost:8000/index.html
 ```
-
+<br><br>
 
 ### 4. Backend Setup (Render)
 The app uses a Render-hosted API for injury data.
@@ -129,6 +129,8 @@ const API_BASE = "https://playmaker-v2-backend.onrender.com";
 ```
 If your backend URL changes, update this constant inside `index.html`.
 
+<br><br>
+
 ### 5. Resetting / Updating Roster Data
 Roster changes are saved using browser `localStorage`.
 
@@ -137,6 +139,8 @@ To fully reset:
   or
   Clear `localStorage` in DevTools → Application → Local Storage
 
+<br><br>
+
 ### 6. Deploying the App
 You can deploy this static site on:
   GitHub Pages
@@ -144,11 +148,16 @@ You can deploy this static site on:
   Netlify
   Render
 
+<br><br>
+---
+
 ### GitHub Pages Example:
   Push code
   Go to Settings → Pages
   Choose “Deploy from Branch” → `main`
   Your site goes live automatically
+
+---
 
 ### Usage Guide
 Open the app
@@ -158,6 +167,7 @@ Open the app
 4. Modify roster or move players as needed
 5. Ensure lineup follows required league structure
 
+---
 
 ### Future Enhancements
 - Projection and matchup-based recommendations
@@ -165,6 +175,7 @@ Open the app
 - Mobile‑optimized layout
 - Export/share lineup features
 
+---
 
 ### Credits
 Built by jaydenuofc for ENTI 633 using AI-assisted ideation, coding, iteration, and documentation.
