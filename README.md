@@ -119,6 +119,7 @@ Then open:
 http://localhost:8000/index.html
 ```
 
+
 ### 4. Backend Setup (Render)
 The app uses a Render-hosted API for injury data.
 Frontend references:
