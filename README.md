@@ -1,97 +1,91 @@
-# PlayMaker V2 – Fantasy Start/Sit Helper
+# PlayMaker V2 – Fantasy Start/Sit Helper  
+### ENTI 633 – AI‑Assisted Application Project
 
-A simple web app that helps fantasy football managers decide who to start or sit using live injury data, lineup validation, and an easy drag-style starter/bench flow.
+![PlayMaker Logo](./logo.png)
+![App Screenshot](./screenshot.png)
 
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Core Features](#core-features)
-- [How It Works](#how-it-works)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Lineup Rules](#lineup-rules)
-- [How We Used AI](#how-we-used-ai)
-- [Future Improvements](#future-improvements)
-- [Credits](#credits)
+PlayMaker V2 is a lightweight web application built as a class project for ENTI 633 and customized for a classmate’s fantasy football team. It uses live injury data and roster‑structure rules to help users quickly evaluate start/sit decisions.
 
 ---
 
-## Overview
+## 📌 Overview
 
-PlayMaker V2 is a fantasy lineup helper that focuses on **start/sit decisions based on injuries and roster structure**, not full projections.  
-It gives a quick, color-coded view of who is healthy, who is risky, and where your lineup breaks roster rules.
-
----
-
-## Core Features
-
-- **Editable Roster**
-  - Add custom players (name, team, position) and manage your own bench.
-  - Delete players you don’t want and move them between **Starters** and **Bench**.
-
-- **Injury-Based Status (Color Coded)**
-  - Pulls live status data from a backend connected to the Sleeper API.
-  - Uses a simple color system:
-    - 🟢 **Healthy** – good to start  
-    - 🟡 **Questionable** – be careful  
-    - 🔴 **Out / IR** – sit candidates  
-
-- **Start/Sit Recommendations**
-  - Identifies **yellow/red starters** and suggests a **green bench player** of the **same position** (or FLEX rules when applicable).
-  - Recommendations are **injury-only** (they don’t consider projections or matchup).
-
-- **Risk Summary**
-  - Shows a quick summary for your current starters:
-    - X healthy, Y questionable, Z out/IR.
-  - Lets you quickly see how “risky” your lineup is this week.
-
-- **Lineup Validation**
-  - Enforces a specific starting lineup format and flags errors if you break it.
-  - Highlights invalid starters and shows an error message when the lineup has too many players at a position.
-
-- **Local Storage**
-  - Your roster edits and lineup changes are saved in `localStorage`.
-  - When you refresh, your last lineup and custom players are restored.
+This project demonstrates how AI can support the end‑to‑end creation of a functional web application.  
+The tool provides a clean interface for evaluating fantasy football lineups using injury‑based logic, roster rules, and automated recommendations.
 
 ---
 
-## How It Works
+## 🚀 Core Features
 
-- **Frontend**
-  - A single-page app built with **HTML, CSS, and vanilla JavaScript**.
-  - Renders two lists: **Starters** and **Bench**, with buttons to move or delete players.
-  - Applies styling to show health status, invalid starters, and recommendations.
+### **Roster Management**
+- Add custom players (name, team, position)
+- Move players between **Starters** and **Bench**
+- Delete unwanted players
+- Automatically saved to browser `localStorage`
 
-- **Backend**
-  - A backend deployed on **Render** at:  
-    `https://playmaker-v2-backend.onrender.com`
-  - Provides an endpoint that returns current player injury status based on names, powered by the Sleeper API.
+### **Live Injury Status Integration**
+- Pulls real‑time injury colors (green/yellow/red) from a backend hosted on Render  
+- Color coding:
+  - 🟢 Healthy  
+  - 🟡 Questionable  
+  - 🔴 Out / IR  
+
+### **Start/Sit Recommendations**
+- Automatically identifies injured starters  
+- Recommends bench replacements from matching positions  
+- FLEX logic supports RB/WR/TE substitutions  
+
+### **Lineup Validation**
+Required starter format:
+- 1 DST  
+- 1 QB  
+- 2 WR  
+- 2 RB  
+- 1 TE  
+- 2 FLEX  
+- 1 K  
+
+If the lineup exceeds allowed counts:
+- Invalid players are highlighted  
+- An error message explains the issue  
+
+### **Risk Summary**
+Displays total starters by status:
+- Healthy  
+- Questionable  
+- Out/IR  
 
 ---
 
-## Tech Stack
+## 🧠 How It Works
 
-- **Frontend**
-  - HTML5
-  - CSS3
-  - Vanilla JavaScript (no frameworks)
+### **Frontend**
+- Single‑page app built using **HTML, CSS, vanilla JavaScript**
+- Dynamic DOM rendering for roster updates
+- Uses browser storage to persist user changes
 
-- **Backend**
-  - Render-hosted REST API
-  - Integrates with the **Sleeper** platform for player injury data
+### **Backend**
+Hosted on Render:  
+`https://playmaker-v2-backend.onrender.com`
 
-- **Storage**
-  - Browser `localStorage` for saving roster and lineup state
+- Exposes `/api/player-status` endpoint
+- Maps player names to injury color codes from the Sleeper API
 
 ---
 
-## Getting Started
+## 🛠 Tech Stack
 
-### 1. Clone the Repo
+**Frontend:** HTML5, CSS3, JavaScript  
+**Backend:** Render-hosted REST API  
+**Data Source:** Sleeper injury data  
+**Storage:** Browser localStorage  
+
+---
+
+## 📥 Installation & Setup
+
+### 1. Clone the GitHub Repository
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo-name>.git
-cd <your-repo-name>
+git clone https://github.com/<your-username>/playmaker-v2.git
+cd playmaker-v2
