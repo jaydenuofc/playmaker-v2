@@ -1,11 +1,12 @@
 # PlayMaker V2 – Fantasy Start/Sit Helper  
 ### ENTI 633 – AI‑Assisted Application Project
 
-![PlayMaker Logo] <img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/641e7233-de90-4c30-8c34-b53046fa6c3e" />
+<img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/641e7233-de90-4c30-8c34-b53046fa6c3e" />
 
-![App Screenshot](./screenshot.png)
+<img width="1011" height="1024" alt="image" src="https://github.com/user-attachments/assets/4f57d084-410f-4fad-895a-b6c850da48f7" />
 
-PlayMaker V2 is a lightweight web application built as a class project for ENTI 633 and customized for a classmate’s fantasy football team. It uses live injury data and roster‑structure rules to help users quickly evaluate start/sit decisions.
+
+PlayMaker V2 is a lightweight web application built as a class project for ENTI 633 and customized for a classmate’s fantasy football team. It uses live injury data and roster‑structure rules to help users quickly evaluate start/sit decisions. 
 
 ---
 
