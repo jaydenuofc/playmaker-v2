@@ -107,20 +107,20 @@ You have two options:
 
 <br>
 
-  **Option A — Open Directly (Fastest)**
+>>**Option A — Open Directly (Fastest)**
 
-  Just open `index.html` in your browser.
+>>Just open `index.html` in your browser.
 
 <br>
 
-  **Option B — Run a Local Server (Recommended)**
+>>**Option B — Run a Local Server (Recommended)**
 
-  Prevents CORS/API issues.
+>>Prevents CORS/API issues.
 ```bash
 python -m http.server 8000
 ```
 
-Then open:
+>>Then open:
 ```bash
 http://localhost:8000/index.html
 ```
