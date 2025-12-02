@@ -122,7 +122,9 @@ http://localhost:8000/index.html
 ### 4. Backend Setup (Render)
 The app uses a Render-hosted API for injury data.
 Frontend references:
+```bash
 const API_BASE = "https://playmaker-v2-backend.onrender.com";
+```
 If your backend URL changes, update this constant inside index.html.
 
 ### 5. Resetting / Updating Roster Data
