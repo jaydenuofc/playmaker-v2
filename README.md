@@ -85,7 +85,6 @@ Hosted on Render:
 ## 🧑‍💻 Setup Instructions
 
 ### 1. Clone the Repository
-----
 ```bash
 git clone https://github.com/jaydenuofc/playmaker-v2.git
 cd playmaker-v2
