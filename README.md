@@ -125,15 +125,15 @@ Frontend references:
 ```bash
 const API_BASE = "https://playmaker-v2-backend.onrender.com";
 ```
-If your backend URL changes, update this constant inside index.html.
+If your backend URL changes, update this constant inside `index.html`.
 
 ### 5. Resetting / Updating Roster Data
-Roster changes are saved using browser localStorage.
+Roster changes are saved using browser `localStorage`.
 
 To fully reset:
   Click Reset to default lineup
   or
-  Clear localStorage in DevTools → Application → Local Storage
+  Clear `localStorage` in DevTools → Application → Local Storage
 
 ### 6. Deploying the App
 You can deploy this static site on:
@@ -145,7 +145,7 @@ You can deploy this static site on:
 ### GitHub Pages Example:
   Push code
   Go to Settings → Pages
-  Choose “Deploy from Branch” → main
+  Choose “Deploy from Branch” → `main`
   Your site goes live automatically
 
 ### Usage Guide
