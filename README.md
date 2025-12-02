@@ -1,8 +1,6 @@
 # PlayMaker V2 – Fantasy Start/Sit Helper  
 ### ENTI 633 – AI‑Assisted Application Project
 
-<img width="250" height="250" alt="logo" src="https://github.com/user-attachments/assets/641e7233-de90-4c30-8c34-b53046fa6c3e" />
-
 <img width="611" height="624" alt="image" src="https://github.com/user-attachments/assets/4f57d084-410f-4fad-895a-b6c850da48f7" />
 
 
