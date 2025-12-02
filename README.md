@@ -91,13 +91,16 @@ git clone https://github.com/jaydenuofc/playmaker-v2.git
 cd playmaker-v2
 
 ```
+
 ### 2. Project Structure
+```bash
 playmaker-v2/
 │
 ├── index.html       # Full app: HTML + CSS + JS
 ├── logo.png         # UI logo
 ├── screenshot.png   # App screenshot for README
 └── README.md
+```
 
 ### 3. Running Locally
 You have two options:
@@ -107,10 +110,14 @@ Just open index.html in your browser.
 
 Option B — Run a Local Server (Recommended)
 Prevents CORS/API issues.
+```bash
 python -m http.server 8000
+```
 
 Then open:
+```bash
 http://localhost:8000/index.html
+```
 
 ### 4. Backend Setup (Render)
 The app uses a Render-hosted API for injury data.
